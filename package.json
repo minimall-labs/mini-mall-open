@@ -2,13 +2,13 @@
   "name": "mini-mall-open",
   "private": true,
   "version": "0.1.0",
-  "description": "MiniMall open platform: open-bff, developer portal, OpenAPI, SDK",
+  "description": "MiniMall open platform: Go server, developer portal, OpenAPI, SDK",
   "scripts": {
     "dev": "pnpm --filter @minimall-open/portal dev",
     "dev:portal": "pnpm --filter @minimall-open/portal dev",
-    "dev:bff": "cd bff && mvn -q spring-boot:run",
+    "dev:server": "cd server && go run .",
     "build": "pnpm --filter @minimall-open/portal run build",
-    "build:bff": "cd bff && mvn -q -DskipTests package"
+    "build:server": "cd server && go build -o ../bin/open-server ."
   },
   "engines": {
     "node": ">=20"

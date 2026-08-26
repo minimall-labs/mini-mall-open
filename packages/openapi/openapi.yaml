@@ -6,15 +6,15 @@ info:
 servers:
   - url: http://127.0.0.1:8092
 paths:
-  /bff/open/health:
+  /open/v1/health:
     get:
-      summary: Open BFF health
+      summary: Open server health
       responses:
         "200":
           description: OK
-  /bff/open/ping:
+  /open/v1/ping:
     get:
-      summary: Open BFF ping
+      summary: Open server ping
       responses:
         "200":
           description: OK

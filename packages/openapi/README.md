@@ -1,3 +1,3 @@
-# OpenAPI
+# OpenAPI 契约源文件
 
-开放平台 HTTP 契约源文件。后续与 `open-bff` 路由、门户文档站同步维护。
+与 `server/`（Go）路由、门户文档站同步维护。路径前缀：`/open/v1/*`。
