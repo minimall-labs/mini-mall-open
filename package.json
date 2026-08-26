@@ -1,0 +1,17 @@
+{
+  "name": "mini-mall-open",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MiniMall open platform: open-bff, developer portal, OpenAPI, SDK",
+  "scripts": {
+    "dev": "pnpm --filter @minimall-open/portal dev",
+    "dev:portal": "pnpm --filter @minimall-open/portal dev",
+    "dev:bff": "cd bff && mvn -q spring-boot:run",
+    "build": "pnpm --filter @minimall-open/portal run build",
+    "build:bff": "cd bff && mvn -q -DskipTests package"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

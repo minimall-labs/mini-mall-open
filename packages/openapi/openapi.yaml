@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: MiniMall Open API (shell)
+  version: 0.1.0
+  description: Placeholder OpenAPI spec for ISV integrations.
+servers:
+  - url: http://127.0.0.1:8092
+paths:
+  /bff/open/health:
+    get:
+      summary: Open BFF health
+      responses:
+        "200":
+          description: OK
+  /bff/open/ping:
+    get:
+      summary: Open BFF ping
+      responses:
+        "200":
+          description: OK
