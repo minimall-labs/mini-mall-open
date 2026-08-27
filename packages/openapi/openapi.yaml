@@ -12,6 +12,24 @@ paths:
       responses:
         "200":
           description: OK
+  /open/v1/apis:
+    get:
+      summary: API catalog
+      responses:
+        "200":
+          description: OK
+  /open/v1/debug/sign:
+    post:
+      summary: Signature preview
+      responses:
+        "200":
+          description: OK
+  /open/v1/debug/execute:
+    post:
+      summary: Debug request execution
+      responses:
+        "200":
+          description: OK
   /open/v1/ping:
     get:
       summary: Open server ping
