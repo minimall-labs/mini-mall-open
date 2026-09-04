@@ -2,13 +2,13 @@
 
 开放平台 monorepo：**Go `server/`** + 开发者门户 + OpenAPI 规范 + SDK 示例。
 
-架构定稿见 [mini-mall-services/docs/architecture-plan-a.md](https://github.com/minimall-labs/mini-mall-services/blob/main/docs/architecture-plan-a.md)。
+平台架构见 [mini-mall-services/docs/architecture.md](https://github.com/minimall-labs/mini-mall-services/blob/main/docs/architecture.md) · 方案 A：[architecture-plan-a.md](https://github.com/minimall-labs/mini-mall-services/blob/main/docs/architecture-plan-a.md)。
 
 ## 结构
 
 ```
 mini-mall-open/
-├── server/              # open server（Go → mini-mall-gateway）
+├── server/              # open server（Go BFF）
 ├── apps/
 │   └── portal/          # 开发者控制台壳（:5300）
 ├── packages/
@@ -26,12 +26,15 @@ mini-mall-open/
 | 对外 Open API（签名、频控） | 商家工作台 |
 | OpenAPI + SDK + 示例 | |
 
-## 北向流量
+## 北向 / 南向
 
 ```
-ISV / 第三方  ──►  open server (:8092)  ──►  mini-mall-gateway (:8080)  ──►  *-service
-开发者门户    ──►  portal (:5300)     ──►  open server
+北向：ISV / SDK / 开发者门户  →  Gateway (:8080)  →  Open BFF (:8092)
+
+南向：Open BFF  →  Gateway  →  *-service（领域读接口规划中）
 ```
+
+门户默认经 Gateway 访问 Open API（`OPEN_SERVER_BASE` / SDK 默认 `http://127.0.0.1:8080/open/v1`）。
 
 ## 开发
 
@@ -45,16 +48,24 @@ cd server && go run .
 
 | 服务 | 地址 |
 |------|------|
-| open server | http://127.0.0.1:8092 |
+| Gateway（北向入口） | http://127.0.0.1:8080 |
+| open server（BFF） | http://127.0.0.1:8092 |
 | portal | http://127.0.0.1:5300 |
 
-健康检查：`GET http://127.0.0.1:8092/open/v1/health`
+健康检查（经 Gateway）：`GET http://127.0.0.1:8080/open/v1/health`
 
 调试接口：
 
 - `GET /open/v1/apis`：API 目录
 - `POST /open/v1/debug/sign`：签名预览
 - `POST /open/v1/debug/execute`：调试执行（目前先回显请求体）
+- `GET /metrics`：Prometheus 风格指标
+
+观测能力：
+
+- 每个请求会自动生成或透传 `X-Request-Id` 和 `X-Trace-Id`
+- 日志输出为结构化 JSON，包含路由、状态码、耗时和 trace 信息
+- BFF 转发到 Gateway 时会透传 trace 头，方便串起链路
 
 门户首页现在就是一个轻量 API 调试台，可以选择接口、编辑参数并查看响应。
 
@@ -68,5 +79,6 @@ cd server && go run .
 ## 相关
 
 - 领域服务：[minimall-labs/mini-mall-services](https://github.com/minimall-labs/mini-mall-services)
+- 网关：[minimall-labs/mini-mall-gateway](https://github.com/minimall-labs/mini-mall-gateway)
 - C 端：[minimall-labs/mini-mall-consumer](https://github.com/minimall-labs/mini-mall-consumer)
 - B 端：[minimall-labs/mini-mall-workbench](https://github.com/minimall-labs/mini-mall-workbench)
