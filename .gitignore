@@ -11,3 +11,8 @@ target/
 logs/
 .env
 .env.*
+
+# Go build output
+server/bin/
+server/*.exe
+server/server
